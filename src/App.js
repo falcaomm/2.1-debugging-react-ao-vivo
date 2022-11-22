@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import "./App.css";
-import Post from "./componetns/Post";
+import "./index.css";
+import Post from "./components/Post/Post";
 
 //!! Os trechos comentados fazem parte do exercício final !!
 // !!!!! não descomentar ou modificar até lá !!!!!
 
 export default function App() {
-  const [textoNovoPost, setTextoNovoPost] = useState("")
-  const [post, setPost] = useState({})
-  // const [comentario, setComentario] = useState("")
+  const [textoNovoPost, setTextoNovoPost] = useState("");
+  const [post, setPost] = useState({});
+  const [comentario, setComentario] = useState("bbb");
+  let [novoComentario, setNovoComentario] = useState("aaa");
 
   const onChangeTextoNovoPost = (event) => {
     setTextoNovoPost(event.target.value);
-  }
+  };
 
   const adicionarPost = () => {
     // Adiciona um post
@@ -20,42 +21,45 @@ export default function App() {
       id: Date.now(),
       texto: textoNovoPost,
       curtido: false
-    }
+    };
 
-    setPost(novoPost)
-  }
-
-  const apagarPost = () => {
-    // Apaga o post enviado
-    setPost()
-  }
+    setPost(novoPost);
+    setTextoNovoPost("");
+  };
 
   const alterarCurtida = () => {
     // Altera o status de curtida do post
     const alterarCurtida = {
       ...post,
-      curtido: post.curtido
-    }
-    setPost(alterarCurtida)
-  }
+      curtido: !post.curtido
+    };
+    setPost(alterarCurtida);
+  };
+
+  const apagarPost = () => {
+    // Apaga o post enviado
+    setPost("");
+  };
 
   // Exercício final de debug. Descomentar só depois de finalizar o debug de post
-  /* function adicionaComentario() {
-    const addComentario ={
-     comentario: comentario
-    }
-    setComentario(addComentario)
-   }
+  function adicionaComentario() {
+    setNovoComentario(comentario);
+    setComentario("");
+  }
 
-   const onChangeComentario = (e) => {
-     setComentario({e.target.valeu})
-   }
-*/
+  const onChangeComentario = (e) => {
+    setComentario(e.target.value);
+  };
+
+  console.log(comentario);
+  console.log(novoComentario);
+
 
   return (
     <div className="App">
       <div>
         <input
+          placeholder="Digite o texto aqui"
           type="text"
           onChange={onChangeTextoNovoPost}
           value={textoNovoPost}
@@ -66,11 +70,12 @@ export default function App() {
       <Post
         post={post}
         alteraCurtida={alterarCurtida}
+        comentario={comentario}
         apagarPost={apagarPost}
-        // onChangeComentarios={onChangeComentario}
-        // adicionaComentarios={adicionaComentario}
+        onChangeComentario={onChangeComentario}
+        adicionaComentario={adicionaComentario}
+        novoComentario={novoComentario}
       />
     </div>
   );
 }
-
